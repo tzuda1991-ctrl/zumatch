@@ -80,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
       NavigationDestination(icon: Icon(Icons.favorite_border), label: 'Interest'),
       NavigationDestination(icon: Icon(Icons.chat_bubble_outline), label: 'Chat'),
       NavigationDestination(icon: Icon(Icons.person_outline), label: 'Profile'),
-    ])),
+    ]),
   );
 }
 void showNotice(BuildContext context) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This feature will be connected to the backend in the next phase.')));
