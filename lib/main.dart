@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
         NavigationDestination(icon: Icon(Icons.search), label: 'Explore'),
         NavigationDestination(icon: Icon(Icons.favorite_border), label: 'Interest'),
         NavigationDestination(icon: Icon(Icons.chat_bubble_outline), label: 'Chat'),
-        NavigationDestination(icon: Icon(Icons.person_outline), label: 'Profile')])));
+        NavigationDestination(icon: Icon(Icons.person_outline), label: 'Profile')]));
 }
 
 class HomeTab extends StatelessWidget {
@@ -71,5 +71,5 @@ class MatchCard extends StatelessWidget {
 class PlaceholderTab extends StatelessWidget {
   final String title; final IconData icon;
   const PlaceholderTab({super.key, required this.title, required this.icon});
-  @override Widget build(BuildContext context) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [Icon(icon, size: 60, color: gold), const SizedBox(height: 12), Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: brown)), const SizedBox(height: 8), const Text('Coming in the next development phase')])));
+  @override Widget build(BuildContext context) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [Icon(icon, size: 60, color: gold), const SizedBox(height: 12), Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: brown)), const SizedBox(height: 8), const Text('Coming in the next development phase')]));
 }
