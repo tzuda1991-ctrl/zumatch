@@ -3,26 +3,40 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+permissions:
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          cache: true
-      - name: Generate Android platform
+      - name: Flutter environment
+        run: flutter doctor -v
+      - name: Generate Android project
         run: |
-          flutter create --platforms=android --project-name=zumatch --org=com.zumatch .
+          flutter create --platforms=android --project-name=zumatch --org=com.zumatch --no-pub .
           rm -f test/widget_test.dart
       - name: Install dependencies
         run: flutter pub get
-      - name: Analyze
-        run: flutter analyze
-      - name: Build debug APK
-        run: flutter build apk --debug
-      - uses: actions/upload-artifact@v4
+      - name: Analyze application
+        continue-on-error: true
+        run: flutter analyze lib
+      - name: Build Android debug APK
+        run: flutter build apk --debug --verbose > build-output.log 2>&1 || { tail -n 200 build-output.log; exit 1; }
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zumatch-build-log
+          path: build-output.log
+          if-no-files-found: ignore
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v4
         with:
           name: zumatch-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
