@@ -13,7 +13,9 @@ jobs:
           channel: stable
           cache: true
       - name: Generate Android platform
-        run: flutter create --platforms=android --project-name=zumatch --org=com.zumatch .
+        run: |
+          flutter create --platforms=android --project-name=zumatch --org=com.zumatch .
+          rm -f test/widget_test.dart
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze
@@ -24,3 +26,4 @@ jobs:
         with:
           name: zumatch-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
