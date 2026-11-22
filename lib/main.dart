@@ -1,3 +1,4 @@
+import 'extra_screens.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const ZuMatchApp());
@@ -40,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
       const Text('MUSLIM MATRIMONY', style: TextStyle(letterSpacing: 3, color: dark)),
       const Spacer(), const Text('Find Your Perfect Nikah Partner', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'serif', fontSize: 29, color: dark)),
       const SizedBox(height: 12), const Text('A Halal, Safe & Trusted Platform for Your Nikah', textAlign: TextAlign.center, style: TextStyle(color: dark)),
-      const SizedBox(height: 32), GoldButton(text: 'Get Started  →', onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MainScreen()))),
+      const SizedBox(height: 32), GoldButton(text: 'Get Started  →', onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const IntroScreen()))),
       const SizedBox(height: 20)
     ]),
   )));
@@ -67,10 +68,10 @@ class _MainScreenState extends State<MainScreen> {
     appBar: AppBar(title: const Row(mainAxisSize: MainAxisSize.min, children: [
       Icon(Icons.favorite, color: gold), SizedBox(width: 8),
       Text('ZuMatch', style: TextStyle(fontFamily: 'serif', fontWeight: FontWeight.bold, fontSize: 27, color: dark))
-    ]), actions: [IconButton(onPressed: () => showNotice(context), icon: const Icon(Icons.notifications_none))]),
+    ]), actions: [IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PremiumScreen())), icon: const Icon(Icons.workspace_premium_outlined)), IconButton(onPressed: () => showNotice(context), icon: const Icon(Icons.notifications_none))]),
     body: SafeArea(child: IndexedStack(index: selected, children: const [
-      HomeTab(), ExploreTab(), EmptyTab('Interest Requests', Icons.favorite_border),
-      EmptyTab('Private Messages', Icons.chat_bubble_outline), EmptyTab('My Profile', Icons.person_outline)
+      HomeTab(), ExploreTab(), InterestScreen(),
+      MessagesScreen(), MyProfileScreen()
     ])),
     bottomNavigationBar: NavigationBar(backgroundColor: ivory, indicatorColor: cream, selectedIndex: selected,
       onDestinationSelected: (i) => setState(() => selected = i), destinations: const [
@@ -156,7 +157,7 @@ class _ExploreTabState extends State<ExploreTab> {
   @override Widget build(BuildContext context) {
     final filtered = matches.where((m) => m.name.toLowerCase().contains(query.toLowerCase()) || m.city.toLowerCase().contains(query.toLowerCase())).toList();
     return ListView(padding: const EdgeInsets.all(18), children: [
-      const Text('Explore Matches', style: TextStyle(fontFamily: 'serif', fontSize: 26, color: dark, fontWeight: FontWeight.bold)),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text('Explore Matches', style: TextStyle(fontFamily: 'serif', fontSize: 26, color: dark, fontWeight: FontWeight.bold)), IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FiltersScreen())), icon: const Icon(Icons.tune, color: gold))]),
       const SizedBox(height: 14),
       TextField(onChanged: (v) => setState(() => query = v), decoration: InputDecoration(prefixIcon: const Icon(Icons.search, color: gold), hintText: 'Search name or city', filled: true, fillColor: Colors.white, border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)))),
       const SizedBox(height: 18),
